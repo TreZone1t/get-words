@@ -6,7 +6,7 @@ import type { Metadata} from "next";
 import { Word } from "@prisma/client";
 
 type Props = {
-  params: { word: string };
+  params: Promise<{ word: string }>;
 };
 
 export async function generateMetadata(
