@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { translate } from './translate';
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { word: string } }
 ) {
   const { word } = await params;
