@@ -45,7 +45,7 @@ export const fetchTranslationWordInContext = async ({ word, sentence }: { word: 
       });
       throw new Error(`The word "${word}" does not exist in the sentence`);
     }
-    const response = await axios.post(`http://localhost:3000/api/translation/context/${word}`, { sentence });
+    const response = await axios.post(`http://localhost:3000/api/translation/context`, { sentence , word });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
