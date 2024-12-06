@@ -5,9 +5,9 @@ import { translate } from './translate';
 export async function POST(
   req: NextRequest,
   res: NextResponse,
-  context: { params: { word: string } }
+  { params }: { params: Promise<{ word: string }> }
 ) {
-  const { word } = await context.params;
+  const  word  = (await params).word;
   const { sentence } = await req.json();
   
   if (!sentence.includes(word)) {
