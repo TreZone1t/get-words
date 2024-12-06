@@ -10,8 +10,7 @@ type Props = {
 };
 
 export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const { word } = await params;
   return {
