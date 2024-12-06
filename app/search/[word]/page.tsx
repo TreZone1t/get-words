@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { fetchWords } from "@/lib/fetch";
 import { ArrowLeftRight } from "lucide-react";
 import Link from "next/link";
-import type { Metadata } from "next";
+import type { Metadata} from "next";
 import { Word } from "@prisma/client";
 
 type Props = {
