@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { translate } from './[word]/translate';
+import { translate } from './translate';
 
 export async function POST(req: NextRequest) {
   try {
