@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  username  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  filters   Filter[]
+  role      Role     @default(USER)
+}
+
+model Filter {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  isNew       Boolean  @default(false)
+  isImportant Boolean  @default(false)
+  isNote      Boolean  @default(false)
+  category    Category @default(INTERNET)
+  unite       Int      @default(0)
+  lesson      Int      @default(0)
+  word        Word     @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  wordId      Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Word {
+  id             Int        @id @default(autoincrement())
+  word           String     @unique
+  searched       Boolean    @default(false)
+  translation    String[]
+  synonyms       Int[]
+  antonyms       Int[]
+  similar        Int[]
+  type           String[]
+  //TODO
+  meaning        String[]
+  example        String[]
+  //
+  filter         Filter?
+}
+
+
+enum Category {
+  MYBOOK
+  INTERNET
+}
+
+enum Role {
+  USER
+  ADMIN
+}
