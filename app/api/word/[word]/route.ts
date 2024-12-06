@@ -6,7 +6,7 @@ import { Word as PrismaWord } from "@prisma/client";
 
 export async function GET(
     request: Request,
-    context: { params: { word: string } }
+    context: { params: Promise<{ word: string }> }
 ) {
     const { word } = await context.params;
     const validation = zWord.safeParse(word);
