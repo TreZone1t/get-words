@@ -1,18 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { translate } from './translate';
 
-type RouteContext = {
-  params: {
-    word: string;
-  };
-};
 
 export async function POST(
-  request: NextRequest,
-  context: RouteContext
+  req: NextRequest,
+  res: NextResponse,
+  context: { params: { word: string } }
 ) {
-  const { word } = context.params;
-  const { sentence } = await request.json();
+  const { word } = await context.params;
+  const { sentence } = await req.json();
   
   if (!sentence.includes(word)) {
     return NextResponse.json(
