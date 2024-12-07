@@ -5,13 +5,13 @@ import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 
 
 
-const apiKey = process.env.API_KEY;
-if (!apiKey) {
-  throw new Error('API Key is missing. Add your API key to the .env file.');
+const googleApiKey = process.env.GOOGLE_API_KEY;
+if (!googleApiKey) {
+  throw new Error('Google API Key is missing. Add your API key to the .env file.');
 }
 
 const prisma = new PrismaClient();
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(googleApiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 export class AIService { 
         constructor() {

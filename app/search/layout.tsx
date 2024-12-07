@@ -15,7 +15,7 @@ export default function SearchLayout({
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <Searchbar />
-      <main className="mt-8 text-center w-full max-w-4xl">
+      <main className="mt-8  w-full max-w-4xl">
         {children}
       </main>
     </div>

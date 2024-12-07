@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster"
 import NavMenu from "@/components/navMenu";
 import { Earth , BookA } from 'lucide-react';
+import { Providers } from "./providers";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -33,9 +33,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark m-2 items-center justify-center`}
       >
-        <NavMenu menu={menu} title={title()} />
-        {children}
-        <Toaster />
+        <Providers>
+          <NavMenu menu={menu} title={title()} />
+          {children}
+        </Providers>
       </body>
     </html>
   );

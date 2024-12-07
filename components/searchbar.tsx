@@ -1,19 +1,29 @@
 'use client';
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 
 export default function Searchbar() {
-  const router = useRouter();
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [word, setWord] = useState('');
-
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (word.trim()) {
-      router.push(`/search/${encodeURIComponent(word.trim())}`);
+      router.push(pathname + '?' + createQueryString('search', word));
     }
   };
 

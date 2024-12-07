@@ -6,29 +6,27 @@ import type { Metadata} from "next";
 import { Word } from "@prisma/client";
 
 type Props = {
-  params: Promise<{ word: string }>;
+  word : string
 };
 
 export async function generateMetadata(
-  { params }: Props
+  { word }: Props
 ): Promise<Metadata> {
-  const { word } = await params;
   return {
     title: `Word Map - ${word}`,
   };
 }
 
-export default async function Page({ params }: Props) {
-  const { word } = await params;
+export default async function WordRender({word}: Props) {
   const { mainWord, synonyms, antonyms, similar } = await fetchWords(word);
-
+  
   const renderWordList = (title: string, words: Word[]) => (
     <div className="mt-4">
       <h2 className="text-lg font-bold">{title}</h2>
       <ul className="list-disc pl-4">
         {words.map((word: Word) => (
           <li key={word.id}>
-            <Link href={`/search/${word.word}`}>{word.word}</Link>
+            <Link href={`/search/${encodeURIComponent(word.word)}`}>{word.word}</Link>
           </li>
         ))}
       </ul>
