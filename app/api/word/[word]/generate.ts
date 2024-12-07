@@ -1,15 +1,12 @@
-import {  Word} from '@prisma/client';
+import { Word } from '@prisma/client';
 import { aiService, wordService } from "@/lib/services";
 import { RelationType } from "@/lib/types";
 import { AIResponseSchema, AIResponseT, zWord } from "@/schema/word";
-
 
 type RankedWord = {
   word: string;
   ranking: number;
 };
-
-
 
 async function generateAIResponse(word: string): Promise<AIResponseT> {
   try {
@@ -34,7 +31,7 @@ async function generateAIResponse(word: string): Promise<AIResponseT> {
 
     if ('message' in jsonResponse) {
       throw new Error(jsonResponse.message);
-    }
+      }
 
     if (!AIResponseSchema.safeParse(jsonResponse).success) {
       throw new Error('Invalid AI response structure : ' + JSON.stringify(jsonResponse));
@@ -52,10 +49,6 @@ async function generateAIResponse(word: string): Promise<AIResponseT> {
   }
 }
 
-
-
-
-
 export async function generate(w: string): Promise<Word> {
   try {
     const validation = zWord.safeParse(w);
@@ -70,29 +63,35 @@ export async function generate(w: string): Promise<Word> {
 
     const aiResponse = await generateAIResponse(w);
     
-      const word = await wordService.createWord(w, {
-        translation: aiResponse.translation.map(t => t.word),
-        type: aiResponse.type,
-        meaning: aiResponse.meaning,
-        example: aiResponse.example
-      });
-    
-      await Promise.all(
-        [...aiResponse.synonym.map(s => ({ ...s, type: RelationType.SYNONYM })),
-         ...aiResponse.antonym.map(a => ({ ...a, type: RelationType.ANTONYM })),
-         ...aiResponse.related.map(r => ({ ...r, type: RelationType.SIMILARITY }))]
-        .map(async (related) => {      
-          await wordService.createRelWord(word, related.word, related.type);
-        })
-      );
-      const updatedWord = await wordService.findWord(w);
-      if (!updatedWord) {
-        throw new Error('Failed to generate word data');
-      }
-      return updatedWord;
+    const wordData = {
+      word: w,
+      type: aiResponse.type,
+      meaning: aiResponse.meaning,
+      example: aiResponse.example,
+      translation: aiResponse.translation.map((t) => t.word),
+      synonyms: [],
+      antonyms: [],
+      similar: [],
+    };
+
+    const newWord = await wordService.createWord(w, wordData);
+
+    // Process related words in parallel
+    await Promise.all([
+      ...aiResponse.synonym.map(async (s) => 
+        wordService.createRelWord(newWord, s.word, RelationType.SYNONYM)
+      ),
+      ...aiResponse.antonym.map(async (a) => 
+        wordService.createRelWord(newWord, a.word, RelationType.ANTONYM)
+      ),
+      ...aiResponse.related.map(async (r) => 
+        wordService.createRelWord(newWord, r.word, RelationType.SIMILARITY)
+      ),
+    ]);
+
+    return newWord;
   } catch (error) {
     console.error('Error in generate function:', error);
     throw error;
   }
 }
-
