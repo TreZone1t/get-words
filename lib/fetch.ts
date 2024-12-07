@@ -3,7 +3,7 @@ import { fetchedWordResponse, FetchedWordResponseT } from "@/schema/word";
 
 export const fetchWords = async (word: string): Promise<FetchedWordResponseT> => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/word/${word}`);
+    const response = await axios.get(`${process.env.MAIN_URL}api/word/${word}`);
     const data = fetchedWordResponse.parse(response.data);
     return data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const fetchWords = async (word: string): Promise<FetchedWordResponseT> =>
 
 export const fetchTranslation = async (sentence: string): Promise<{ translation: string }> => {
   try {
-    const response = await axios.post(`http://localhost:3000/api/translation`, { sentence });
+    const response = await axios.post(`${process.env.MAIN_URL}api/translation`, { sentence });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -31,7 +31,7 @@ export const fetchTranslationWordInContext = async ({ word, sentence }: { word: 
     if (!sentence.includes(word)) {
       throw new Error(`The word "${word}" does not exist in the sentence`);
     }
-    const response = await axios.post(`http://localhost:3000/api/translation/context`, { sentence , word });
+    const response = await axios.post(`${process.env.MAIN_URL}api/translation/context`, { sentence , word });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
