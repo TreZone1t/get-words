@@ -33,6 +33,16 @@ export class AIService {
         }
     }
 export const aiService = new AIService();
+export class URlService {
+   getMyURL() {
+    const url = process.env.URL;
+    if (!url) {
+      return 'http://localhost:3000';
+    }
+    return url;
+  }
+}
+export const urlService = new URlService();
 export class WordService {
   async findWord(word: string): Promise<Word | null> {
     return prisma.word.findUnique({
