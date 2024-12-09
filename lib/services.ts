@@ -34,11 +34,11 @@ export class AIService {
 export const aiService = new AIService();
 export class URlService {
    getMyURL() {
-    const url = process.env.URL;
+    const url = process.env.IS_VERCEL
     if (!url) {
       return 'http://localhost:3000';
     }
-    return url;
+    return '';
   }
 }
 export const urlService = new URlService();
