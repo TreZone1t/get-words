@@ -7,6 +7,7 @@ export const fetchWords = async (word: string): Promise<FetchedWordResponseT> =>
   try {
     const response = await axios.get(`${URL}/api/word/${encodeURIComponent(word)}`);
     const data = fetchedWordResponse.parse(response.data);
+    console.log(data);
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

@@ -2,7 +2,7 @@ import { PrismaClient, Word} from '@prisma/client';
 import { RelationType } from './types';
 import { DataForCreateWord, DataForCreateWordT, UpdateRelatedWordSchema, UpdateRelatedWordT } from '@/schema/word';
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
-
+import { PrismaClient as PrismaEdges } from '@prisma/client/edge';
 
 
 const googleApiKey = process.env.GOOGLE_API_KEY;
@@ -13,15 +13,18 @@ if (!googleApiKey) {
 const prisma = new PrismaClient();
 const genAI = new GoogleGenerativeAI(googleApiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const prismaEdges = new PrismaEdges();
 export class AIService { 
         constructor() {
             this.prisma = prisma;
             this.genAI = genAI;
             this.model = model;
+            this.prismaEdges = prismaEdges;
         }
         prisma: PrismaClient;
         genAI: GoogleGenerativeAI;
         model: GenerativeModel ;
+        prismaEdges: PrismaEdges;
         connectToDatabase() {
             return this.prisma;
         }
