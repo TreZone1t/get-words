@@ -50,7 +50,6 @@ model Word {
   filter         Filter?
 }
 
-
 enum Category {
   MYBOOK
   INTERNET

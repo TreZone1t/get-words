@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { translate } from './translate';
 
+export const runtime = 'edge';
+
 export async function POST(req: NextRequest) {
   try {
     const { sentence, word } = await req.json();

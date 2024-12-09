@@ -2,7 +2,6 @@ import { PrismaClient, Word} from '@prisma/client';
 import { RelationType } from './types';
 import { DataForCreateWord, DataForCreateWordT, UpdateRelatedWordSchema, UpdateRelatedWordT } from '@/schema/word';
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
-import { PrismaClient as PrismaEdges } from '@prisma/client/edge';
 
 
 const googleApiKey = process.env.GOOGLE_API_KEY;
@@ -13,18 +12,15 @@ if (!googleApiKey) {
 const prisma = new PrismaClient();
 const genAI = new GoogleGenerativeAI(googleApiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-const prismaEdges = new PrismaEdges();
 export class AIService { 
         constructor() {
             this.prisma = prisma;
             this.genAI = genAI;
             this.model = model;
-            this.prismaEdges = prismaEdges;
         }
         prisma: PrismaClient;
         genAI: GoogleGenerativeAI;
         model: GenerativeModel ;
-        prismaEdges: PrismaEdges;
         connectToDatabase() {
             return this.prisma;
         }
@@ -38,16 +34,11 @@ export class AIService {
 export const aiService = new AIService();
 export class URlService {
    getMyURL() {
-    if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-      return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+    const url = process.env.URL;
+    if (!url) {
+      return 'http://localhost:3000';
     }
-    if (process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`;
-    }
-    if (process.env.URL) {
-      return process.env.URL;
-    }
-    return 'http://localhost:3000';
+    return url;
   }
 }
 export const urlService = new URlService();
