@@ -2,18 +2,19 @@ import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
-import { redirect } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormField, FormItem, FormControl } from "./ui/form";
+import { useForm as useHookForm } from "react-hook-form";
 
 const formSchema = z.object({
   searchTerm: z.string().min(1, "Please enter a search term"),
 });
 
 export default function Searchbar() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const form = useHookForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       searchTerm: "",
@@ -22,7 +23,7 @@ export default function Searchbar() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.searchTerm.trim()) {
-      redirect(`/search?search=${encodeURIComponent(values.searchTerm.trim())}`);
+      router.push(`/search?search=${encodeURIComponent(values.searchTerm.trim())}`);
     }
   }
 
