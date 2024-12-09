@@ -15,6 +15,7 @@ export default async function Search({
     const search = params?.search;
     console.log(search);
     if (!search) {
+        
         return (
             <div className="container mx-auto p-4">
                 <h1 className="text-xl font-bold mb-4">Please provide a search term</h1>

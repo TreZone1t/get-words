@@ -5,14 +5,16 @@ import { fetchedWordResponse, FetchedWordResponseT } from "@/schema/word";
 const URL =  urlService.getMyURL();
 export const fetchWords = async (word: string): Promise<FetchedWordResponseT> => {
   try {
-    const response = await axios.get(URL + "/api/word/" + word);
+    const response = await axios.get(`${URL}/api/word/${encodeURIComponent(word)}`);
     const data = fetchedWordResponse.parse(response.data);
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data.message || error.message);
+      console.error('API Error:', error.response?.data || error.message);
+      throw new Error('Failed to fetch word data. Please try again later.');
     }
-    throw error;
+    console.error('Unexpected Error:', error);
+    throw new Error('An unexpected error occurred. Please try again later.');
   }
 };
 

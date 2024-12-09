@@ -35,11 +35,16 @@ export class AIService {
 export const aiService = new AIService();
 export class URlService {
    getMyURL() {
-    const url = process.env.URL;
-    if (!url) {
-      return 'http://localhost:3000';
+    if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+      return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
     }
-    return url;
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    if (process.env.URL) {
+      return process.env.URL;
+    }
+    return 'http://localhost:3000';
   }
 }
 export const urlService = new URlService();
