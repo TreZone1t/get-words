@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default function Searchbar() {
   async function handleSubmit(formData: FormData) {
     "use server";
-    const searchTerm = formData.get("searchTerm") as string;
+    const searchTerm = formData.get("search") as string;
     if (searchTerm?.trim()) {
       redirect(`/search?search=${encodeURIComponent(searchTerm.trim())}`);
     }
