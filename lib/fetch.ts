@@ -5,6 +5,7 @@ import { fetchedWordResponse, FetchedWordResponseT } from "@/schema/word";
 const URL =  urlService.getMyURL();
 export const fetchWords = async (word: string): Promise<FetchedWordResponseT> => {
   try {
+    console.log(`${URL}/api/word/${encodeURIComponent(word)}`);
     const response = await axios.get(`${URL}/api/word/${encodeURIComponent(word)}`);
     const data = fetchedWordResponse.parse(response.data);
     console.log(data);
