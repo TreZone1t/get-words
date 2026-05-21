@@ -191,6 +191,29 @@ export class WordService {
     
     return relatedWords;
   };
+
+  async getWordData(word: string) {
+    //the best way to do it
+    const { generate } = await import('@/app/api/word/[word]/generate');
+    const mainWord = await generate(word);
+    
+    if (!mainWord) {
+      throw new Error("Failed to generate word data");
+    }
+
+    const [synonyms, antonyms, similar] = await Promise.all([
+      this.getRelatedWords(mainWord.synonyms),
+      this.getRelatedWords(mainWord.antonyms),
+      this.getRelatedWords(mainWord.similar)
+    ]);
+
+    return {
+      mainWord,
+      synonyms,
+      antonyms,
+      similar
+    };
+  }
 }
 
 export const wordService = new WordService();
