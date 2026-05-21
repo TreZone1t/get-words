@@ -16,7 +16,7 @@ export const fetchWords = async (word: string): Promise<FetchedWordResponseT> =>
   }
 };
 
-export const fetchTranslation = async (sentence: string): Promise<{ translation: string }> => {
+export const fetchTranslation = async (sentence: string): Promise<{ translation: string[] }> => {
   try {
     const response = await axios.post(URL + "/api/translation", { sentence });
     return response.data;
