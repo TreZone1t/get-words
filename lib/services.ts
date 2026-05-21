@@ -64,11 +64,10 @@ export class AIService {
 export const aiService = new AIService();
 export class URlService {
    getMyURL() {
-    const url = process.env.IS_VERCEL
-    if (!url) {
-      return 'http://localhost:3000';
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
     }
-    return '';
+    return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   }
 }
 export const urlService = new URlService();
