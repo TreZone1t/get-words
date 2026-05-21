@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { generate } from "@/app/api/word/[word]/generate";
-import { wordService } from "@/lib/services";
+import { fetchWords } from "@/lib/fetch";
 import { ArrowRight, BookOpen, Shuffle, AlignLeft, Sparkles, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { Word } from "@prisma/client";
@@ -12,17 +11,13 @@ type Props = {
 
 
 export default async function WordRender({word}: Props) {
-  const mainWord = await generate(word);
+  const { mainWord, synonyms, antonyms, similar } = await fetchWords(word);
   
   if (!mainWord) {
     return <div className="text-center p-12 text-xl text-red-400">Failed to generate word data.</div>;
   }
 
-  const [synonyms, antonyms, similar] = await Promise.all([
-      wordService.getRelatedWords(mainWord.synonyms),
-      wordService.getRelatedWords(mainWord.antonyms),
-      wordService.getRelatedWords(mainWord.similar)
-  ]);
+
   
   const renderWordList = (title: string, words: Word[], Icon: React.ElementType, colorClass: string) => (
     <div className="flex flex-col h-full">
