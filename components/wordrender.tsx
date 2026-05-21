@@ -2,20 +2,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { fetchWords } from "@/lib/fetch";
 import { ArrowRight, BookOpen, Shuffle, AlignLeft, Sparkles, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import type { Metadata} from "next";
 import { Word } from "@prisma/client";
 
 type Props = {
   word : string
 };
 
-export async function generateMetadata(
-  { word }: Props
-): Promise<Metadata> {
-  return {
-    title: `Word Map - ${word}`,
-  };
-}
+
 
 export default async function WordRender({word}: Props) {
   const { mainWord, synonyms, antonyms, similar } = await fetchWords(word);

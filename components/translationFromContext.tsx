@@ -1,6 +1,5 @@
 'use client';
 import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
 import { Languages, ArrowRightLeft, Sparkles, BookOpen } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -114,11 +113,10 @@ export default function TranslationFromContext() {
                 </div>
               </div>
               
-              <Button 
+              <button 
                 type="submit" 
-                size="lg"
                 disabled={isLoading}
-                className="w-full md:w-auto md:min-w-[250px] md:mx-auto md:block px-8 py-6 rounded-xl font-semibold tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] active:scale-95 bg-emerald-600 hover:bg-emerald-500 text-white mt-8"
+                className="w-full md:w-auto md:min-w-[250px] md:mx-auto md:block px-8 py-4 rounded-xl font-semibold tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] active:scale-95 bg-emerald-600 hover:bg-emerald-500 text-white mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -126,10 +124,10 @@ export default function TranslationFromContext() {
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <Sparkles className="w-5 h-5" /> Translate in Context
+                    <Languages className="w-5 h-5" /> Translate in Context
                   </span>
                 )}
-              </Button>
+              </button>
             </form>
           </Form>
 

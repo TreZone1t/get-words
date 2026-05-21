@@ -1,6 +1,5 @@
 'use client';
 import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
 import { Languages, ArrowRightLeft, Sparkles } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "./ui/form";
@@ -29,8 +28,9 @@ export default function Translator() {
     setIsLoading(true);
     try {
       const response = await fetchTranslation(values.sourceText);
-      // Join multiple translation options with a clear separator
-      setTranslation(response.translation.join('\n\n-- أو --\n\n'));
+      //TODO : change this way
+      // Join multiple translation options with a clear separator , ',' is butter because it supports more languages in future
+      setTranslation(response.translation.join(','));
     } finally {
       setIsLoading(false);
     }
@@ -91,11 +91,10 @@ export default function Translator() {
                 </div>
               </div>
               
-              <Button 
+              <button 
                 type="submit" 
-                size="lg"
                 disabled={isLoading}
-                className="w-full md:w-auto md:min-w-[200px] md:mx-auto md:block px-8 py-6 rounded-xl font-semibold tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 bg-blue-600 hover:bg-blue-500 text-white"
+                className="w-full md:w-auto md:min-w-[200px] md:mx-auto md:block px-8 py-4 rounded-xl font-semibold tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 bg-blue-600 hover:bg-blue-500 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -103,10 +102,10 @@ export default function Translator() {
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <Sparkles className="w-5 h-5" /> Translate Now
+                    <Languages className="w-5 h-5"/> Translate
                   </span>
                 )}
-              </Button>
+              </button>
             </form>
           </Form>
         </CardContent>

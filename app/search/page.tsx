@@ -1,4 +1,5 @@
 import WordRender from '@/components/wordrender';
+import { Loader } from 'lucide-react';
 import { Suspense } from 'react';
 
 type SearchParams = Promise<{
@@ -24,7 +25,7 @@ export default async function Search({
     
     return (
         <div className="container mx-auto p-4">
-                <Suspense fallback={<div className="text-center">Loading word data...</div>}>
+                <Suspense fallback={<div className="text-center"><div className="flex items-center justify-center"><Loader className="w-5 h-5 animate-spin m-2" /> Loading ...</div></div>}>
                     <WordRender word={search} />
                 </Suspense>
         </div>
