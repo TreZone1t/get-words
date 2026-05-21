@@ -3,13 +3,17 @@ import { fetchWords } from "@/lib/fetch";
 import { ArrowRight, BookOpen, Shuffle, AlignLeft, Sparkles, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { Word } from "@prisma/client";
+import { headers } from "next/headers";
 
 type Props = {
   word : string
 };
 
 export default async function WordRender({word}: Props) {
-  const { mainWord, synonyms, antonyms, similar } = await fetchWords(word);
+  const headersList = await headers();
+  const cookieHeader = headersList.get("cookie") || undefined;
+  
+  const { mainWord, synonyms, antonyms, similar } = await fetchWords(word, cookieHeader);
   
   if (!mainWord) {
     return <div className="text-center p-12 text-xl text-red-400">Failed to generate word data.</div>;

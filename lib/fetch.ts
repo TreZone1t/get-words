@@ -11,10 +11,12 @@ const getBaseUrl = () => {
   return process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 };
 
-export const fetchWords = async (word: string): Promise<FetchedWordResponseT> => {
+export const fetchWords = async (word: string, cookieHeader?: string): Promise<FetchedWordResponseT> => {
   try {
     const url = `${getBaseUrl()}/api/word/${encodeURIComponent(word)}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: cookieHeader ? { Cookie: cookieHeader } : {}
+    });
     const data = fetchedWordResponse.parse(response.data);
     return data;
   } catch (error) {
