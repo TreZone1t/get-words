@@ -1,7 +1,7 @@
 import { PrismaClient, Word} from '@prisma/client';
 import { RelationType } from './types';
 import { DataForCreateWord, DataForCreateWordT, UpdateRelatedWordSchema, UpdateRelatedWordT } from '@/schema/word';
-import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, GenerationConfig } from '@google/generative-ai';
 
 const googleApiKey = process.env.GOOGLE_API_KEY;
 
@@ -36,7 +36,7 @@ export class AIService {
             return this.genAI;  
         }
         
-        async generateContentWithFallback(prompt: string, generationConfig: any) {
+        async generateContentWithFallback(prompt: string, generationConfig?: GenerationConfig) {
             let lastError;
             for (const modelName of fallbackModels) {
                 try {
@@ -47,13 +47,14 @@ export class AIService {
                     });
                     const result = await model.generateContent(prompt);
                     return result;
-                } catch (error: any) {
-                    console.error(`Model ${modelName} failed:`, error.message);
-                    lastError = error;
+                } catch (error: unknown) {
+                    const err = error as Error;
+                    console.error(`Model ${modelName} failed:`, err.message);
+                    lastError = err;
                     // If it's a quota error (429), try the next model
                     // If it's a 503 Service Unavailable, try the next model
-                    if (!error.message?.includes('503') && !error.message?.includes('429')) {
-                        throw error; // Throw other errors immediately
+                    if (!err.message?.includes('503') && !err.message?.includes('429')) {
+                        throw err; // Throw other errors immediately
                     }
                 }
             }

@@ -16,10 +16,11 @@ export async function POST(req: NextRequest) {
     
     const response = await translate(word, sentence);
     return NextResponse.json(response);
-  } catch (error: any) {
-    console.error('Error in POST:', error);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error('Error in POST:', err);
     return NextResponse.json(
-      { message: error?.message || 'An error occurred while processing the request', stack: error?.stack },
+      { message: err?.message || 'An error occurred while processing the request', stack: err?.stack },
       { status: 500 }
     );
   }
