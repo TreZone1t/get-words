@@ -1,4 +1,4 @@
-# 🌍 getWords 
+# \\🌍 getWords
 
 ![getWords Logo Aesthetic](https://img.shields.io/badge/Aesthetic-Cyberpunk%20Neon-040914?style=for-the-badge&logoColor=3B82F6)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
@@ -25,6 +25,7 @@
 - **Database ORM:** [Prisma](https://www.prisma.io/)
 - **Database:** [Neon DB (Serverless PostgreSQL)](https://neon.tech/)
 - **AI Integration:** [Google Generative AI (Gemini)](https://ai.google.dev/)
+
 ## 💡 How it works
 
 1. **Search a Word:** Enter a word in the search bar.
@@ -32,8 +33,10 @@
 3. **AI Generation:** If the word doesn't exist, the app prompts the Gemini AI model to generate meanings, examples, and relations, storing the structured output back into the database for future use.
 4. **Context Translation:** Enter a full sentence and a target word. The AI determines the exact contextual translation of the word and stores it intelligently.
 
-
 ---
+
 ## TO DO :
-1.moving to NEXT.JS 16
-2.making it translation from diffrant languages not only enlish and arabic
+
+1. making it translation from different languages not only english and arabic
+2. use a different method to use AI not JSON 
+3. making a home page
