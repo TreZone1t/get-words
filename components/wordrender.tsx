@@ -8,8 +8,6 @@ type Props = {
   word : string
 };
 
-
-
 export default async function WordRender({word}: Props) {
   const { mainWord, synonyms, antonyms, similar } = await fetchWords(word);
   
