@@ -25,43 +25,6 @@
 - **Database ORM:** [Prisma](https://www.prisma.io/)
 - **Database:** [Neon DB (Serverless PostgreSQL)](https://neon.tech/)
 - **AI Integration:** [Google Generative AI (Gemini)](https://ai.google.dev/)
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-\`\`\`bash
-git clone https://github.com/yourusername/getwords.git
-cd getwords
-\`\`\`
-
-### 2. Install dependencies
-\`\`\`bash
-npm install
-\`\`\`
-
-### 3. Environment Variables
-Create a \`.env\` file in the root directory and add the following keys:
-
-\`\`\`env
-# Your Google Gemini API Key
-GOOGLE_API_KEY=your_gemini_api_key_here
-
-# Your Neon PostgreSQL Database URL (Ensure pgbouncer=true is appended for pooler links)
-DATABASE_URL=postgresql://user:password@your-neon-hostname.neon.tech/neondb?sslmode=require&pgbouncer=true
-\`\`\`
-
-### 4. Push Database Schema
-Sync your Prisma schema with the Neon database:
-\`\`\`bash
-npx prisma db push
-\`\`\`
-
-### 5. Run the Development Server
-\`\`\`bash
-npm run dev
-\`\`\`
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 ## 💡 How it works
 
 1. **Search a Word:** Enter a word in the search bar.
@@ -69,13 +32,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 3. **AI Generation:** If the word doesn't exist, the app prompts the Gemini AI model to generate meanings, examples, and relations, storing the structured output back into the database for future use.
 4. **Context Translation:** Enter a full sentence and a target word. The AI determines the exact contextual translation of the word and stores it intelligently.
 
-## 👾 Design Aesthetic
-
-The UI was meticulously crafted to match the brand logo:
-- **Background:** Deep Navy (`#040914`)
-- **Primary Accent:** Neon Globe Blue
-- **Secondary Accent:** Neon Book Mint Green
-- **Effects:** Glassy cards, dynamic background radial gradients, and subtle chromatic aberration (glitch) text on headers.
 
 ---
-*Built with ❤️ using Next.js and AI.*
+## TO DO :
+1.moving to NEXT.JS 16
+2.making it translation from diffrant languages not only enlish and arabic
