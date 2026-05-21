@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { translate } from './translate';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,10 +16,10 @@ export async function POST(req: NextRequest) {
     
     const response = await translate(word, sentence);
     return NextResponse.json(response);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in POST:', error);
     return NextResponse.json(
-      { message: 'An error occurred while processing the request' },
+      { message: error?.message || 'An error occurred while processing the request', stack: error?.stack },
       { status: 500 }
     );
   }

@@ -3,32 +3,61 @@ import { RelationType } from './types';
 import { DataForCreateWord, DataForCreateWordT, UpdateRelatedWordSchema, UpdateRelatedWordT } from '@/schema/word';
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 
-
 const googleApiKey = process.env.GOOGLE_API_KEY;
+
 if (!googleApiKey) {
   throw new Error('Google API Key is missing. Add your API key to the .env file.');
 }
 
-const prisma = new PrismaClient();
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 const genAI = new GoogleGenerativeAI(googleApiKey);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const fallbackModels = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-2.5-flash", "gemini-2.5-flash-lite"];
+
 export class AIService { 
         constructor() {
             this.prisma = prisma;
             this.genAI = genAI;
-            this.model = model;
         }
         prisma: PrismaClient;
         genAI: GoogleGenerativeAI;
-        model: GenerativeModel ;
+        
         connectToDatabase() {
             return this.prisma;
         }
         connectToAi() {
             return this.genAI;  
         }
-        connectToModel() {
-            return this.model;  
+        
+        async generateContentWithFallback(prompt: string, generationConfig: any) {
+            let lastError;
+            for (const modelName of fallbackModels) {
+                try {
+                    console.log(`Trying model: ${modelName}`);
+                    const model = this.genAI.getGenerativeModel({
+                        model: modelName,
+                        generationConfig
+                    });
+                    const result = await model.generateContent(prompt);
+                    return result;
+                } catch (error: any) {
+                    console.error(`Model ${modelName} failed:`, error.message);
+                    lastError = error;
+                    // If it's a quota error (429), try the next model
+                    // If it's a 503 Service Unavailable, try the next model
+                    if (!error.message?.includes('503') && !error.message?.includes('429')) {
+                        throw error; // Throw other errors immediately
+                    }
+                }
+            }
+            throw lastError || new Error("All fallback models failed.");
         }
     }
 export const aiService = new AIService();

@@ -1,41 +1,41 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import NavMenu from "@/components/navMenu";
 import { Earth , BookA } from 'lucide-react';
 import { Providers } from "./providers";
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "getworda",
-  description: "search for words and their definitions and translations",
+  title: "getwords",
+  description: "Search for words and their definitions and translations",
 };
-const menu = [ { title: "Search", href: "/search" }, { title: "translation", href: "/translation" }, { title: "translation from context", href: "/translation/context" }];
+
+const menu = [ { title: "Search", href: "/search" }, { title: "Translation", href: "/translation" }, { title: "Context Translation", href: "/translation/context" }];
+
 const title = () => (
-  <p className="font-bold flex items-center text-center text-2xl ">get W<Earth className="h-3 w-3" />rds  <BookA className="h-5 w-5" /></p>
+  <p className="font-bold flex items-center text-center text-2xl tracking-tight text-white">getW<Earth className="h-5 w-5 mx-0.5 text-blue-400" />rds  <BookA className="h-6 w-6 ml-2 text-emerald-400" /></p>
 );
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark m-2 items-center justify-center`}
-      >
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} font-sans antialiased`}>
         <Providers>
-          <NavMenu menu={menu} title={title()} />
-          {children}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12">
+            <NavMenu menu={menu} title={title()} />
+            <main className="mt-8">
+              {children}
+            </main>
+          </div>
         </Providers>
       </body>
     </html>
