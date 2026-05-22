@@ -41,10 +41,8 @@ export default function TranslationFromContext() {
 
   return (
     <div className="mx-auto max-w-4xl relative group mt-10">
-      <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
       <Card className="relative glass-card border-0 rounded-2xl overflow-hidden shadow-2xl">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400"></div>
-        <CardContent className="p-8 md:p-12">
+        <CardContent className="p-5 sm:p-8 md:p-12">
           
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-500/20 rounded-xl text-emerald-400">
@@ -67,7 +65,7 @@ export default function TranslationFromContext() {
                     <FormControl>
                       <Textarea 
                         placeholder="Enter the full sentence here for context..." 
-                        className="min-h-[120px] resize-none bg-background/50 border-white/10 focus-visible:ring-emerald-500/50 text-lg p-6 rounded-xl transition-all shadow-inner" 
+                        className="min-h-[120px] resize-none bg-background/50 border-white/10 focus-visible:ring-emerald-500/50 text-base sm:text-lg p-4 sm:p-6 rounded-xl transition-all shadow-inner" 
                         {...field} 
                       />
                     </FormControl>
@@ -76,7 +74,7 @@ export default function TranslationFromContext() {
                 )}
               />
 
-              <div className="flex flex-col md:flex-row items-stretch gap-6 bg-background/30 p-6 rounded-xl border border-white/5">
+              <div className="flex flex-col md:flex-row items-stretch gap-6 bg-background/30 p-4 sm:p-6 rounded-xl border border-white/5">
                 <FormField
                   control={form.control}
                   name="word"
@@ -86,7 +84,7 @@ export default function TranslationFromContext() {
                       <FormControl>
                         <Input 
                           placeholder="Word to translate" 
-                          className="bg-background/50 border-white/10 focus-visible:ring-emerald-500/50 text-lg py-6 rounded-xl transition-all shadow-inner" 
+                          className="bg-background/50 border-white/10 focus-visible:ring-emerald-500/50 text-base sm:text-lg py-4 sm:py-6 rounded-xl transition-all shadow-inner" 
                           {...field} 
                         />
                       </FormControl>
@@ -105,7 +103,7 @@ export default function TranslationFromContext() {
                   <label className="text-muted-foreground font-medium uppercase tracking-wider text-xs ml-1 block">Word Translation</label>
                   <Input 
                     placeholder={isLoading ? "Translating..." : "Translation"} 
-                    className={`border-white/10 text-lg py-6 rounded-xl transition-all shadow-inner text-center font-bold ${isLoading ? 'bg-emerald-500/5 animate-pulse' : 'bg-background/50'}`} 
+                    className={`border-white/10 text-base sm:text-lg py-4 sm:py-6 rounded-xl transition-all shadow-inner text-center font-bold ${isLoading ? 'bg-emerald-500/5 animate-pulse' : 'bg-background/50'}`} 
                     readOnly 
                     dir="rtl"
                     value={translation} 

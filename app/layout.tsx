@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavMenu from "@/components/navMenu";
-import { Earth , BookA } from 'lucide-react';
+import { Earth , BookA, Search ,MessageCircle, BookOpenText } from 'lucide-react';
 import { Providers } from "./providers";
 
 const inter = Inter({
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   description: "Search for words and their definitions and translations",
 };
 
-const menu = [ { title: "Search", href: "/search" }, { title: "Translation", href: "/translation" }, { title: "Context Translation", href: "/translation/context" }];
+const menu = [ { title: "Search" , icon: <Search />, href: "/search" }, 
+  { title: "Translation", icon: <BookOpenText  />, href: "/translation" },
+   { title: "Context Translation", icon: <MessageCircle />, href: "/translation/context" }
+  ];
 
 const title = () => (
   <p className="font-bold flex items-center text-center text-2xl tracking-tight text-white">getW<Earth className="h-5 w-5 mx-0.5 text-blue-400" />rds  <BookA className="h-6 w-6 ml-2 text-emerald-400" /></p>

@@ -38,10 +38,8 @@ export default function Translator() {
 
   return (
     <div className="mx-auto max-w-4xl relative group mt-10">
-      <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
       <Card className="relative glass-card border-0 rounded-2xl overflow-hidden shadow-2xl">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-blue-400 to-secondary"></div>
-        <CardContent className="p-8 md:p-12">
+        <CardContent className="p-5 sm:p-8 md:p-12">
           
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-primary/20 rounded-xl text-primary">
@@ -64,7 +62,7 @@ export default function Translator() {
                       <FormControl>
                         <Textarea 
                           placeholder="Enter English text to translate..." 
-                          className="min-h-[200px] resize-none bg-background/50 border-white/10 focus-visible:ring-blue-500/50 text-lg p-6 rounded-xl transition-all shadow-inner"
+                          className="min-h-[200px] resize-none bg-background/50 border-white/10 focus-visible:ring-blue-500/50 text-base sm:text-lg p-4 sm:p-6 rounded-xl transition-all shadow-inner"
                           {...field} 
                         />
                       </FormControl>
@@ -83,7 +81,7 @@ export default function Translator() {
                   <label className="text-muted-foreground font-medium uppercase tracking-wider text-xs ml-1 block">Arabic Translation</label>
                   <Textarea 
                     placeholder={isLoading ? "Translating..." : "Translation will appear here"} 
-                    className={`min-h-[200px] resize-none border-white/10 text-lg p-6 rounded-xl transition-all shadow-inner text-right ${isLoading ? 'bg-blue-500/5 animate-pulse' : 'bg-background/50'}`} 
+                    className={`min-h-[200px] resize-none border-white/10 text-base sm:text-lg p-4 sm:p-6 rounded-xl transition-all shadow-inner text-right ${isLoading ? 'bg-blue-500/5 animate-pulse' : 'bg-background/50'}`} 
                     readOnly 
                     dir="rtl"
                     value={translation} 
